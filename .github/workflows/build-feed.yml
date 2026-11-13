@@ -1,0 +1,48 @@
+name: Build Spanish Google feed
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # daily, 07:00 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build feed
+        run: node build-google-feed-es.mjs public
+      - name: Landing page
+        run: |
+          cat > public/index.html <<'HTML'
+          <!doctype html><meta charset="utf-8"><title>United HVAC Motors feeds</title>
+          <p>Google Merchant Center feed (es-US): <a href="google-feed-es.xml">google-feed-es.xml</a> · <a href="google-feed-es.xml.gz">google-feed-es.xml.gz</a></p>
+          HTML
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
