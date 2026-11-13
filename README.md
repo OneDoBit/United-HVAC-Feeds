@@ -2,8 +2,8 @@
 
 Builds one Spanish (es-US) Google Merchant Center feed every day and publishes it on GitHub Pages:
 
-- https://onedobit.github.io/united-hvac-feeds/google-feed-es.xml
-- https://onedobit.github.io/united-hvac-feeds/google-feed-es.xml.gz (same file, gzipped; Merchant Center accepts it)
+- https://onedobit.github.io/United-HVAC-Feeds/google-feed-es.xml
+- https://onedobit.github.io/United-HVAC-Feeds/google-feed-es.xml.gz (same file, gzipped; Merchant Center accepts it)
 
 Source: the theme template `collection.google-feed-es` (United-HVAC-Motors theme repo), read page by page
 from `https://unitedhvacmotors.com/es/collections/all?view=google-feed-es&country=US`.
